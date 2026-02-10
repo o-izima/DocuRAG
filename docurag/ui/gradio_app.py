@@ -73,6 +73,7 @@ def build_app():
 
                 status_box = gr.Textbox(label="Status", value="Ready.", interactive=False)
                 clear_btn = gr.Button("Clear / Reset session", variant="primary")
+                #clear_btn = gr.Button("Clear / Reset session")
 
             with gr.Column():
                 gr.Markdown("### 💬 Ask")
@@ -81,7 +82,11 @@ def build_app():
                     placeholder="e.g., What is self-attention and why is it useful?",
                     lines=2
                 )
+<<<<<<< HEAD
                 ask_btn = gr.Button("Ask", variant="primary")
+=======
+                ask_btn = gr.Button("Ask")
+>>>>>>> d19c1e0 (Initial commit: DocuRAG modularized RAG app)
 
                 gr.Markdown("### ✅ Answer")
                 answer_output = gr.Markdown()
@@ -106,5 +111,16 @@ def build_app():
     return demo
 
 if __name__ == "__main__":
+    import os 
     app = build_app()
-    app.launch(share=True)
+
+    # HF Spaces sets SPACE_ID
+    on_spaces = os.getenv("SPACE_ID") is not None
+
+    app.launch(
+        server_name="0.0.0.0",
+        server_port=int(os.getenv("PORT", "7860")),
+        share=not on_spaces,
+        )
+
+
