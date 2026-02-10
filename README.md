@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: DocuRAG — PDF RAG (No LangChain)
 emoji: 📄
@@ -9,6 +10,8 @@ app_file: docurag/ui/gradio_app.py
 pinned: false
 ---
 
+=======
+>>>>>>> 32a0361 (Initial commit: DocuRAG modularized RAG app)
 # DocuRAG — PDF RAG Assistant (No LangChain)
 
 DocuRAG is a **LangChain-free** PDF Retrieval-Augmented Generation (RAG) application that ingests PDFs (upload or URL), extracts text (with optional OCR), chunks content, embeds into **Chroma**, retrieves top-k passages, and generates grounded answers using the **OpenAI** API — with **source citations**.
