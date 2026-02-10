@@ -72,7 +72,7 @@ def build_app():
                 )
 
                 status_box = gr.Textbox(label="Status", value="Ready.", interactive=False)
-                clear_btn = gr.Button("Clear / Reset session")
+                clear_btn = gr.Button("Clear / Reset session", variant="primary")
 
             with gr.Column():
                 gr.Markdown("### 💬 Ask")
@@ -81,7 +81,7 @@ def build_app():
                     placeholder="e.g., What is self-attention and why is it useful?",
                     lines=2
                 )
-                ask_btn = gr.Button("Ask")
+                ask_btn = gr.Button("Ask", variant="primary")
 
                 gr.Markdown("### ✅ Answer")
                 answer_output = gr.Markdown()
