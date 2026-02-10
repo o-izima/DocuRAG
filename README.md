@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ---
 title: DocuRAG — PDF RAG (No LangChain)
 emoji: 📄
@@ -12,6 +13,8 @@ pinned: false
 
 =======
 >>>>>>> 32a0361 (Initial commit: DocuRAG modularized RAG app)
+=======
+>>>>>>> 453bdb0 (initial commit)
 # DocuRAG — PDF RAG Assistant (No LangChain)
 
 DocuRAG is a **LangChain-free** PDF Retrieval-Augmented Generation (RAG) application that ingests PDFs (upload or URL), extracts text (with optional OCR), chunks content, embeds into **Chroma**, retrieves top-k passages, and generates grounded answers using the **OpenAI** API — with **source citations**.
@@ -77,3 +80,17 @@ True OCR requires the system package `tesseract-ocr`. The Dockerfile installs it
 
 ## License
 MIT
+=======
+---
+title: Docurag
+emoji: 🐠
+colorFrom: red
+colorTo: gray
+sdk: docker
+pinned: false
+license: mit
+short_description: Retrieval-Augmented Generation over PDFs and URLs with OCR s
+---
+
+Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+>>>>>>> 83bfbc7 (initial commit)
