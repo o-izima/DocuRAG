@@ -1,5 +1,13 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
+---
+title: DocuRAG — PDF RAG (No LangChain)
+emoji: 📄
+colorFrom: blue
+colorTo: gray
+sdk: gradio
+app_file: app.py
+pinned: false
+---
+
 <<<<<<< HEAD
 <<<<<<< HEAD
 ---

@@ -74,8 +74,12 @@ def build_app():
                 )
 
                 status_box = gr.Textbox(label="Status", value="Ready.", interactive=False)
+<<<<<<< HEAD
                 clear_btn = gr.Button("Clear / Reset session", variant="primary")
                 #clear_btn = gr.Button("Clear / Reset session")
+=======
+                clear_btn = gr.Button("Clear / Reset session", variant="primary"git statu)
+>>>>>>> 8ddbf6a (Updated files)
 
             with gr.Column():
                 gr.Markdown("### 💬 Ask")
