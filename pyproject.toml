@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docurag"
+version = "0.1.0"
+description = "LangChain-free PDF RAG with Chroma, OpenAI, optional OCR, and a Gradio UI."
+readme = "README.md"
+requires-python = ">=3.10"
+
+[tool.setuptools]
+packages = ["docurag"]
