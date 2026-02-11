@@ -21,6 +21,7 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
 ## 📑 Contents 
 
 - [Project Overview](#project-overview)
+- [Live Demo](#live-demo)
 - [Architecture Overview](#architecture-overview)
 - [System Overview](#system-overview)
 - [Codebase Structure](#codebase-structure)
@@ -38,7 +39,7 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 
 DocuRAG enables users to ask natural‑language questions over custom knowledge sources provided via:
 
@@ -49,13 +50,13 @@ The system retrieves the most relevant document segments using **vector similari
 
 ---
 
-## 🚀 Live Demo
+## Live Demo
 
 [![Hugging Face Space](https://img.shields.io/badge/🤗%20Hugging%20Face-Live%20Demo-yellow?style=for-the-badge)](https://huggingface.co/spaces/oizima/docurag)
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 ```mermaid
 flowchart TD
@@ -79,7 +80,7 @@ flowchart TD
 
 DocuRAG is a modular, document-grounded RAG system built around a clear separation of concerns across [`docurag/core/`](docurag/core/), [`docurag/ui/`](docurag/ui/), and [`docurag/utils/`](docurag/utils/) modules (see the table below, [Design Goals → Code Mapping](#design-goals--code-mapping)). It supports both local PDF uploads and URL-based ingestion via [`docurag/core/ingestion.py`](docurag/core/ingestion.py), extracts text using a resilient `fitz → pdfplumber → OCR` cascade in [`docurag/core/extraction.py`](docurag/core/extraction.py), and ensures session-isolated retrieval through [`docurag/core/vectorstore.py`](docurag/core/vectorstore.py) to prevent data leakage. Query-time behavior is orchestrated in [`docurag/core/rag.py`](docurag/core/rag.py), including intent-aware handling for summarization-style prompts (e.g., “main contributions”) and safe fallbacks that suppress citations when no relevant evidence is retrieved, while [`docurag/ui/formatting.py`](docurag/ui/formatting.py) provides transparent citations and retrieval debug views. The full stack is designed for reproducible deployment with OCR enabled, using the [`Dockerfile`](Dockerfile) and [`requirements.txt`](requirements.txt) to keep runtime behavior consistent across local runs and Hugging Face Spaces.
 
-## 🧩 Codebase Structure
+## Codebase Structure
 
 ```text
 docurag/
@@ -106,7 +107,7 @@ docurag/
 ```
 
 ---
-## ✨ Core Functionalities (What This System Demonstrates)
+## Core Functionalities (What This System Demonstrates)
 
 This project intentionally mirrors decisions made in real applied‑AI systems.
 
@@ -148,7 +149,7 @@ When a document contains only images, standard text extraction returns little or
 
 ---
 
-## 🎯 Key Design Goals
+## Key Design Goals
 - **Clear separation of concerns:**
 Each stage of the RAG pipeline (ingestion, extraction, chunking, retrieval, generation, and UI) is isolated into well-defined modules, improving readability, testability, and long-term maintainability.
 
@@ -198,7 +199,7 @@ The RAG pipeline is implemented without heavy orchestration frameworks, keeping 
 
 ---
 
-## 🛡️ Failure Modes & Safeguards
+## Failure Modes & Safeguards
 
 DocuRAG is designed to handle common failure modes in document-centric RAG systems gracefully, prioritizing correctness, transparency, and user trust.
 
