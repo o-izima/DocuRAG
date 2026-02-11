@@ -74,12 +74,12 @@ def build_app():
                 )
 
                 status_box = gr.Textbox(label="Status", value="Ready.", interactive=False)
-<<<<<<< HEAD
+
                 clear_btn = gr.Button("Clear / Reset session", variant="primary")
                 #clear_btn = gr.Button("Clear / Reset session")
-=======
-                clear_btn = gr.Button("Clear / Reset session", variant="primary"git statu)
->>>>>>> 8ddbf6a (Updated files)
+
+                clear_btn = gr.Button("Clear / Reset session", variant="primary")
+
 
             with gr.Column():
                 gr.Markdown("### 💬 Ask")
@@ -88,11 +88,10 @@ def build_app():
                     placeholder="e.g., What is self-attention and why is it useful?",
                     lines=2
                 )
-<<<<<<< HEAD
+
                 ask_btn = gr.Button("Ask", variant="primary")
-=======
+
                 ask_btn = gr.Button("Ask")
->>>>>>> d19c1e0 (Initial commit: DocuRAG modularized RAG app)
 
                 gr.Markdown("### ✅ Answer")
                 answer_output = gr.Markdown()
@@ -128,10 +127,4 @@ if __name__ == "__main__":
         server_name="0.0.0.0",
         server_port=int(os.getenv("PORT", "7860")),
         share=not on_spaces,
-<<<<<<< HEAD
     )
-=======
-        )
-
-
->>>>>>> 9ee9f5d (Updated files)
