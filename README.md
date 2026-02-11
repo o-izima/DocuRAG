@@ -187,6 +187,13 @@ Start the Gradio UI:
 ```bash
 python -m docurag.ui.gradio_app
 ```
+
+If your repository includes the helper script, you can also run:
+
+```bash
+bash scripts/run_gradio.sh
+
+```
 Then open:
 
 ```bash
