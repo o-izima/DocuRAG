@@ -61,6 +61,66 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
 
 ---
 
+<!-- =======================
+     DocuRAG Polished Header
+     ML · NLP · Systems Design Focused
+     ======================= -->
+
+<div align="center">
+  <a name="top"></a>
+
+  <h1 style="margin-bottom: 0.2rem;">📄 DocuRAG</h1>
+
+  <p style="margin-top: 0; margin-bottom: 0.75rem;">
+    <b>Production-Style Retrieval-Augmented Generation over User-Supplied Documents</b><br/>
+    <span style="opacity: 0.85;">
+      Designed to demonstrate how modern LLM systems retrieve, ground, and generate answers over 
+      <b>PDFs and URLs</b> — without orchestration frameworks.
+    </span>
+  </p>
+
+  <p style="margin-top: 0; margin-bottom: 1rem; max-width: 820px;">
+    DocuRAG showcases <b>applied ML, NLP, and system design principles</b> relevant to real-world RAG deployments:
+    modular architecture, session-isolated vector retrieval, OCR-enabled ingestion, 
+    intent-aware summarization routing, and source-grounded generation.
+  </p>
+
+  <!-- Primary Action Badges -->
+  <p style="margin: 0.75rem 0 1rem 0;">
+    <a href="https://huggingface.co/spaces/oizima/docurag" target="_blank" rel="noopener noreferrer">
+      <img alt="Hugging Face Space" src="https://img.shields.io/badge/🤗%20Hugging%20Face-Live%20Demo-yellow?style=for-the-badge" />
+    </a>
+    <a href="https://github.com/o-izima/DocuRAG" target="_blank" rel="noopener noreferrer">
+      <img alt="GitHub Repository" src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github&logoColor=white" />
+    </a>
+  </p>
+
+  <!-- Capability Badges -->
+  <p style="margin: 0 0 1rem 0;">
+    <img alt="Deployed on Spaces" src="https://img.shields.io/badge/Deployed-HF%20Spaces-555?style=flat-square" />
+    <img alt="Dockerized" src="https://img.shields.io/badge/Dockerized-Yes-555?style=flat-square" />
+    <img alt="OCR enabled" src="https://img.shields.io/badge/OCR-Tesseract%20Enabled-555?style=flat-square" />
+    <img alt="Vector store" src="https://img.shields.io/badge/Vector%20Store-Chroma-555?style=flat-square" />
+    <img alt="No LangChain" src="https://img.shields.io/badge/Framework-Free%20Pipeline-555?style=flat-square" />
+  </p>
+
+  <!-- Quick Navigation Links -->
+  <p style="margin: 0 0 0.25rem 0;">
+    <a href="#-project-overview">Overview</a> ·
+    <a href="#live-demo">Live Demo</a> ·
+    <a href="#-architecture-overview">Architecture</a> ·
+    <a href="#system-overview">System Overview</a> ·
+    <a href="#-codebase-structure">Codebase</a> ·
+    <a href="#-key-design-goals">Design Goals</a> ·
+    <a href="#-failure-modes--safeguards">Safeguards</a> ·
+    <a href="#-running-docurag">Run</a>
+  </p>
+
+  <hr style="margin-top: 1.25rem;"/>
+</div>
+
+---
+
 ## 📑 Contents 
 
 - [Project Overview](#project-overview)
