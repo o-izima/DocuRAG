@@ -1,4 +1,5 @@
 ---
+<<<<<<< HEAD
 title: DocuRAG — PDF RAG (No LangChain)
 emoji: 📄
 colorFrom: blue
@@ -75,6 +76,8 @@ True OCR requires the system package `tesseract-ocr`. The Dockerfile installs it
 MIT
 =======
 ---
+=======
+>>>>>>> 83bfbc7 (initial commit)
 title: Docurag
 emoji: 🐠
 colorFrom: red
@@ -86,6 +89,7 @@ short_description: Retrieval-Augmented Generation over PDFs and URLs with OCR s
 ---
 
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+<<<<<<< HEAD
 >>>>>>> 83bfbc7 (initial commit)
 =======
 ---
@@ -165,3 +169,5 @@ True OCR requires the system package `tesseract-ocr`. The Dockerfile installs it
 ## License
 MIT
 >>>>>>> d19c1e0 (Initial commit: DocuRAG modularized RAG app)
+=======
+>>>>>>> 83bfbc7 (initial commit)
