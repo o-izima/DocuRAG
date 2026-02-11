@@ -8,6 +8,7 @@ app_file: app.py
 pinned: false
 ---
 
+<a name="top"></a>
 # 📄 DocuRAG — Document Retrieval‑Augmented Generation (RAG)
 
 DocuRAG is a **production‑style, modular Retrieval‑Augmented Generation (RAG) system** designed to demonstrate how modern LLM applications retrieve, ground, and generate answers over **user‑supplied documents** — *without LangChain*.
@@ -237,9 +238,11 @@ Hugging Face will:
 
 ---
 
-## 📜 License
+## License
 
-MIT License.
+This project is licensed under the [MIT License](./LICENSE). See the LICENSE file for details.
+
+[⬆ Go to Top](#top)
 
 ---
 
