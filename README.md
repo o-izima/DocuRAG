@@ -21,19 +21,19 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
 ## 📑 Contents 
 
 - [Project Overview](#project-overview)
-- [Architecture Overview](#architecture)
+- [Architecture Overview](#architecture-overview)
 - [System Overview](#system-overview)
 - [Codebase Structure](#codebase-structure)
 - [Core Functionalities](#core-functionalities)
-- [Key Design Goals](#design-goals)
-- [Failure Modes & Safeguards](#failure-modes)
+- [Key Design Goals](#key-design-goals)
+- [Failure Modes & Safeguards](#failure-modes--safeguards)
 - [Design Goals → Code Mapping](#design-goals--code-mapping)
   - [Implementation Map](#design-goals--implementation-map)
 - [Running DocuRAG](#running-docurag)
   - [Local Setup](#run-locally)
   - [Docker Deployment](#run-with-docker)
   - [Hugging Face Spaces](#run-on-hugging-face-spaces)
-- [Testing PDFs](#quick-testing-pdfs)
+- [Testing PDFs](#testing-pdfs)
 - [License](#license)
 
 ---
