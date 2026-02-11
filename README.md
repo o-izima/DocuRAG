@@ -1,3 +1,14 @@
+---
+title: DocuRAG - Document PDF RAG with OCR (No LangChain)
+emoji: 📄
+colorFrom: blue
+colorTo: gray
+sdk: gradio
+sdk_version: "latest"
+app_file: docurag/ui/gradio_app.py
+pinned: false
+---
+
 <a name="top"></a>
 # 📄 DocuRAG — Document Retrieval‑Augmented Generation (RAG)
 
