@@ -261,6 +261,103 @@ The table below maps DocuRAG’s key design goals directly to the modules that e
 
 ---
 
+## 🧩 Design Goals → Code Mapping
+
+The table below maps DocuRAG’s key design goals directly to the modules that enforce them.
+
+> Note: Links are relative to the repo root.
+
+| Design Goal | Enforced By |
+|------------|-------------|
+| Clear separation of concerns | [`docurag/core/`](docurag/core/) · [`docurag/ui/`](docurag/ui/) · [`docurag/utils/`](docurag/utils/) |
+| Robust document ingestion with OCR | [`docurag/core/ingestion.py`](docurag/core/ingestion.py) · [`docurag/core/extraction.py`](docurag/core/extraction.py) · [`Dockerfile`](Dockerfile) |
+| Session-isolated retrieval | [`docurag/core/vectorstore.py`](docurag/core/vectorstore.py) |
+| Extensible models & embeddings | [`docurag/core/config.py`](docurag/core/config.py) · [`docurag/core/rag.py`](docurag/core/rag.py) |
+| Multiple ingestion paths (PDF + URL) | [`docurag/core/ingestion.py`](docurag/core/ingestion.py) |
+| Adaptive handling of summary-style queries | [`docurag/core/rag.py`](docurag/core/rag.py) *(see `is_summary_intent`, summary routing)* |
+| Suppression of citations when no evidence exists | [`docurag/core/rag.py`](docurag/core/rag.py) · [`docurag/ui/formatting.py`](docurag/ui/formatting.py) |
+| Grounded generation from retrieved context only | [`docurag/core/rag.py`](docurag/core/rag.py) |
+| Configurable chunking strategies | [`docurag/core/chunking.py`](docurag/core/chunking.py) · [`docurag/core/config.py`](docurag/core/config.py) |
+| NLP preprocessing & sentence handling | [`docurag/utils/nlp.py`](docurag/utils/nlp.py) · [`docurag/utils/text.py`](docurag/utils/text.py) |
+| Reproducible, OCR-ready deployment | [`Dockerfile`](Dockerfile) · [`requirements.txt`](requirements.txt) |
+| Debuggability of retrieval behavior | [`docurag/ui/formatting.py`](docurag/ui/formatting.py) *(retrieval debug output)* |
+
+### Mermaid: Goals → Modules Map
+
+```mermaid
+flowchart LR
+  %% Goals
+  G1["Clear separation of concerns"]
+  G2["Robust ingestion (incl. OCR)"]
+  G3["Session-isolated retrieval"]
+  G4["Extensible models & embeddings"]
+  G5["PDF + URL ingestion paths"]
+  G6["Summary-style query handling"]
+  G7["Suppress citations when no evidence"]
+  G8["Grounded generation from retrieved context"]
+  G9["Configurable chunking strategies"]
+  G10["NLP preprocessing & sentence handling"]
+  G11["Reproducible, OCR-ready deployment"]
+  G12["Retrieval debug visibility"]
+
+  %% Modules
+  MCore["docurag/core/"]
+  MUI["docurag/ui/"]
+  MUtils["docurag/utils/"]
+  MConfig["core/config.py"]
+  MIngest["core/ingestion.py"]
+  MExtract["core/extraction.py"]
+  MChunk["core/chunking.py"]
+  MVS["core/vectorstore.py"]
+  MRAG["core/rag.py"]
+  MFormat["ui/formatting.py"]
+  MNLP["utils/nlp.py"]
+  MText["utils/text.py"]
+  MDocker["Dockerfile"]
+  MReq["requirements.txt"]
+
+  %% Edges
+  G1 --> MCore
+  G1 --> MUI
+  G1 --> MUtils
+
+  G2 --> MIngest
+  G2 --> MExtract
+  G2 --> MDocker
+
+  G3 --> MVS
+
+  G4 --> MConfig
+  G4 --> MRAG
+
+  G5 --> MIngest
+
+  G6 --> MRAG
+
+  G7 --> MRAG
+  G7 --> MFormat
+
+  G8 --> MRAG
+
+  G9 --> MChunk
+  G9 --> MConfig
+
+  G10 --> MNLP
+  G10 --> MText
+
+  G11 --> MDocker
+  G11 --> MReq
+
+  G12 --> MFormat
+
+---
+
+## Executive Summary
+
+DocuRAG is a modular, document-grounded RAG system built around a clear separation of concerns across [`docurag/core/`](docurag/core/), [`docurag/ui/`](docurag/ui/), and [`docurag/utils/`](docurag/utils/) modules (see the table above). It supports both local PDF uploads and URL-based ingestion via [`docurag/core/ingestion.py`](docurag/core/ingestion.py), extracts text using a resilient `fitz → pdfplumber → OCR` cascade in [`docurag/core/extraction.py`](docurag/core/extraction.py), and ensures session-isolated retrieval through [`docurag/core/vectorstore.py`](docurag/core/vectorstore.py) to prevent data leakage. Query-time behavior is orchestrated in [`docurag/core/rag.py`](docurag/core/rag.py), including intent-aware handling for summarization-style prompts (e.g., “main contributions”) and safe fallbacks that suppress citations when no relevant evidence is retrieved, while [`docurag/ui/formatting.py`](docurag/ui/formatting.py) provides transparent citations and retrieval debug views. The full stack is designed for reproducible deployment with OCR enabled, using the [`Dockerfile`](Dockerfile) and [`requirements.txt`](requirements.txt) to keep runtime behavior consistent across local runs and Hugging Face Spaces.
+
+---
+
 ## ▶️ Running DocuRAG
 
 ### 🖥️ Run Locally (Recommended for Development)
