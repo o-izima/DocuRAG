@@ -96,12 +96,7 @@ The system retrieves the most relevant document segments using **vector similari
 
 [![Hugging Face Space](https://img.shields.io/badge/🤗%20Hugging%20Face-Live%20Demo-yellow?style=for-the-badge)](https://huggingface.co/spaces/oizima/docurag)
 
-<p align="center">
-  <a href="https://huggingface.co/spaces/oizima/docurag" target="_blank" rel="noopener noreferrer">
-    <img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Live%20Demo-yellow?style=for-the-badge" />
-  </a>
-</p>
-
+A live deployment is available on [Hugging Face Spaces](https://huggingface.co/spaces/oizima/docurag).
 
 ---
 
