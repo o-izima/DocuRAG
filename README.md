@@ -8,149 +8,160 @@ app_file: app.py
 pinned: false
 ---
 
+# 📄 DocuRAG — Document Retrieval‑Augmented Generation (RAG)
 
-# DocuRAG — PDF RAG Assistant (No LangChain)
+DocuRAG is a **production‑style, modular Retrieval‑Augmented Generation (RAG) system** designed to demonstrate how modern LLM applications retrieve, ground, and generate answers over **user‑supplied documents** — *without LangChain*.
 
-DocuRAG is a **LangChain-free** PDF Retrieval-Augmented Generation (RAG) application that ingests PDFs (upload or URL), extracts text (with optional OCR), chunks content, embeds into **Chroma**, retrieves top-k passages, and generates grounded answers using the **OpenAI** API — with **source citations**.
+It is built to showcase **applied ML, NLP, and systems design skills** relevant to real‑world RAG deployments.
 
-## Architecture
+---
+
+## 🚀 Project Overview
+
+DocuRAG enables users to ask natural‑language questions over custom knowledge sources provided via:
+
+- 📂 **Local PDF upload**
+- 🌐 **URL ingestion** (automatic fetch + processing)
+
+The system retrieves the most relevant document segments using **vector similarity search (Chroma)** and generates **context‑grounded answers** using an LLM, with optional **summary‑style responses** when intent is detected.
+
+Key design goals:
+- Clear separation of concerns
+- Extensibility across models and embeddings
+- Robust document ingestion (including OCR)
+- Session‑isolated retrieval to avoid data leakage
+
+---
+
+## ✨ Core Functionalities (What This System Demonstrates)
+
+This project intentionally mirrors decisions made in real applied‑AI systems.
+
+### 📄 Document Ingestion
+- Upload **native or scanned PDFs**
+- Ingest **web content via URL**
+- Metadata preservation for citations
+
+### 🔍 Robust Text Extraction
+- **Cascade extraction strategy**:
+  1. PyMuPDF (`fitz`) — fast, native PDFs
+  2. pdfplumber — complex layouts
+  3. OCR fallback (Tesseract) — scanned documents
+
+### ✂️ Intelligent Chunking
+- Word‑window chunking with overlap
+- Sentence‑based chunking (NLTK)
+- **Auto mode** that adapts to document size
+
+### 🧠 Retrieval‑Augmented Generation
+- Session‑scoped **Chroma vector stores**
+- Top‑K similarity retrieval
+- Context‑bounded prompting
+- **Summary‑intent detection** vs QA routing
+
+### 🧾 Traceability & Citations
+- Page‑level source attribution
+- Optional debug traces
+- Clean formatting for UI display
+
+### 🖥️ Deployment‑Ready UI
+- Gradio interface
+- Local, Docker, and Hugging Face Spaces support
+
+---
+
+## 🏗️ Architecture Overview
 
 ```mermaid
-flowchart LR
-  A[User: Upload PDF / URL] --> B[Ingestion]
-  B --> C[Extraction Cascade]
-  C -->|fitz| C1[PyMuPDF text]
-  C -->|fallback| C2[pdfplumber text]
-  C -->|fallback| C3[OCR: pytesseract (optional)]
-  C --> D[Chunking]
-  D --> D1[Sentence-preserving]
-  D --> D2[Word-window w/ overlap]
-  D --> E[Embeddings: OpenAI text-embedding-3-small]
-  E --> F[Vector DB: Chroma]
-  F --> G[Retriever: top-k]
-  G --> H[LLM: OpenAI gpt-4o-mini]
-  H --> I[Answer + Citations]
+flowchart TD
+  A[Gradio UI] --> B[Ingestion]
+  B -->|PDF| C[Extraction Cascade]
+  B -->|URL| D[URL Fetch]
+  C --> E[Text Cleaning]
+  D --> E
+  E --> F[Chunking]
+  F --> G[Chroma Vector Store]
+  H[User Query] --> I[RAG Orchestrator]
+  I --> G
+  G --> I
+  I --> K[LLM Generation]
+  K --> A
 ```
 
-## Features
-- Upload PDFs or provide a PDF URL
-- Extraction cascade per page: **fitz → pdfplumber → OCR**
-- Dual chunking strategies (**sentence** / **word**) + **auto**
-- Summary intent detection expands retrieval context for “summarize / main contributions”
-- Citations show **source + page + snippet**
-- Retrieval debug panel to show top-k chunks
-- Reset button clears UI + vector store (fresh Chroma session)
+---
 
-## Setup
+## 🧩 Codebase Structure
 
-### Local
+```text
+docurag/
+├─ docurag/
+│  ├─ core/
+│  │  ├─ config.py        # environment + settings
+│  │  ├─ ingestion.py     # PDF / URL ingestion
+│  │  ├─ extraction.py    # fitz → pdfplumber → OCR cascade
+│  │  ├─ chunking.py      # word / sentence / auto
+│  │  ├─ vectorstore.py   # per‑session Chroma
+│  │  └─ rag.py           # indexing, retrieval, generation
+│  ├─ ui/
+│  │  ├─ formatting.py    # citations + debug output
+│  │  └─ gradio_app.py    # Gradio UI
+│  └─ utils/
+│     ├─ text.py          # text cleaning
+│     └─ nlp.py           # NLTK helpers
+├─ app.py                 # HF Spaces entry point
+├─ Dockerfile             # includes tesseract‑ocr
+├─ requirements.txt
+├─ pyproject.toml
+├─ .env.example
+└─ README.md
+```
+
+---
+
+## 🖥️ Run Locally
+
 ```bash
+git clone https://github.com/oizima/docurag.git
+cd docurag
+
 python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
+
 cp .env.example .env
-# set OPENAI_API_KEY in .env
-python -m docurag.ui.gradio_app
+python app.py
 ```
 
-### Docker
-```bash
-docker build -t docurag .
-docker run -p 7860:7860 --env OPENAI_API_KEY=$OPENAI_API_KEY docurag
-```
+Open: http://localhost:7860
 
-### Hugging Face Spaces (Gradio)
-- Create a Gradio Space
-- Add `OPENAI_API_KEY` as a Secret
-- Push this repo
-- App file: `docurag/ui/gradio_app.py`
-
-## Test PDFs
-- https://arxiv.org/pdf/1706.03762.pdf
-- https://arxiv.org/pdf/2501.12948.pdf
-
-## Notes on OCR
-True OCR requires the system package `tesseract-ocr`. The Dockerfile installs it. Some hosted environments may require additional setup.
-
-## License
-MIT
-=======
----
-title: Docurag
-emoji: 🐠
-colorFrom: red
-colorTo: gray
-sdk: docker
-pinned: false
-license: mit
-short_description: Retrieval-Augmented Generation over PDFs and URLs with OCR s
 ---
 
-Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
+## 🐳 Docker
 
-=======
-# DocuRAG — PDF RAG Assistant (No LangChain)
-
-DocuRAG is a **LangChain-free** PDF Retrieval-Augmented Generation (RAG) application that ingests PDFs (upload or URL), extracts text (with optional OCR), chunks content, embeds into **Chroma**, retrieves top-k passages, and generates grounded answers using the **OpenAI** API — with **source citations**.
-
-## Architecture
-
-```mermaid
-flowchart LR
-  A[User: Upload PDF / URL] --> B[Ingestion]
-  B --> C[Extraction Cascade]
-  C -->|fitz| C1[PyMuPDF text]
-  C -->|fallback| C2[pdfplumber text]
-  C -->|fallback| C3[OCR: pytesseract (optional)]
-  C --> D[Chunking]
-  D --> D1[Sentence-preserving]
-  D --> D2[Word-window w/ overlap]
-  D --> E[Embeddings: OpenAI text-embedding-3-small]
-  E --> F[Vector DB: Chroma]
-  F --> G[Retriever: top-k]
-  G --> H[LLM: OpenAI gpt-4o-mini]
-  H --> I[Answer + Citations]
-```
-
-## Features
-- Upload PDFs or provide a PDF URL
-- Extraction cascade per page: **fitz → pdfplumber → OCR**
-- Dual chunking strategies (**sentence** / **word**) + **auto**
-- Summary intent detection expands retrieval context for “summarize / main contributions”
-- Citations show **source + page + snippet**
-- Retrieval debug panel to show top-k chunks
-- Reset button clears UI + vector store (fresh Chroma session)
-
-## Setup
-
-### Local
-```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env
-# set OPENAI_API_KEY in .env
-python -m docurag.ui.gradio_app
-```
-
-### Docker
 ```bash
 docker build -t docurag .
-docker run -p 7860:7860 --env OPENAI_API_KEY=$OPENAI_API_KEY docurag
+docker run -p 7860:7860 --env-file .env docurag
 ```
 
-### Hugging Face Spaces (Gradio)
-- Create a Gradio Space
-- Add `OPENAI_API_KEY` as a Secret
-- Push this repo
-- App file: `docurag/ui/gradio_app.py`
+---
 
-## Test PDFs
-- https://arxiv.org/pdf/1706.03762.pdf
-- https://arxiv.org/pdf/2501.12948.pdf
+## 🤗 Hugging Face Spaces
 
-## Notes on OCR
-True OCR requires the system package `tesseract-ocr`. The Dockerfile installs it. Some hosted environments may require additional setup.
+```bash
+git clone https://huggingface.co/spaces/oizima/docurag
+cd docurag
+git add .
+git commit -m "Deploy DocuRAG"
+git push
+```
 
-## License
-MIT
+The Space will automatically build and launch the Gradio app.
+
+---
+
+## 📜 License
+
+MIT License.
+
+---
+
