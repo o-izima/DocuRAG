@@ -85,6 +85,25 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
     intent-aware summarization routing, and source-grounded generation.
   </p>
 
+  <p style="margin-top: 0; margin-bottom: 0.75rem; text-align: justify;">
+  <b>Production-Grade Retrieval-Augmented Generation for Document-Centric LLM Systems</b><br/>
+  <span style="opacity: 0.9;">
+    An end-to-end, framework-independent RAG implementation demonstrating how modern LLM
+    applications retrieve, ground, and generate responses over <b>user-supplied PDFs and URLs</b>,
+    with explicit control over ingestion, retrieval, and generation stages.
+  </span>
+</p>
+
+<p style="margin-top: 0; margin-bottom: 1rem; max-width: 820px; text-align: justify;">
+  DocuRAG emphasizes applied <b>machine learning, NLP, and systems engineering</b> practices
+  relevant to real-world deployments: modular pipeline design, session-isolated vector indexing,
+  OCR-resilient document extraction, intent-aware summarization routing, and strictly
+  source-grounded answer generation. The system is intentionally implemented without
+  orchestration frameworks to maintain architectural transparency and fine-grained control
+  over retrieval and prompting behavior.
+</p>
+
+
   <!-- Primary Action Badges -->
   <p style="margin: 0.75rem 0 1rem 0;">
     <a href="https://huggingface.co/spaces/oizima/docurag" target="_blank" rel="noopener noreferrer">
@@ -120,6 +139,31 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
 </div>
 
 ---
+<h1 style="margin-bottom: 0.2rem;">📄 DocuRAG</h1>
+
+<p style="margin-top: 0; margin-bottom: 0.5rem; font-size: 1.05rem;">
+  <b>Document Retrieval-Augmented Generation (RAG)</b>
+</p>
+
+<p style="margin-top: 0; margin-bottom: 0.75rem; text-align: justify;">
+  <b>Production-Grade RAG Architecture for Document-Centric LLM Systems</b><br/>
+  <span style="opacity: 0.9;">
+    An end-to-end, framework-independent implementation demonstrating how modern LLM
+    applications retrieve, ground, and generate responses over <b>user-supplied PDFs and URLs</b>,
+    with explicit control over ingestion, retrieval, and generation stages.
+  </span>
+</p>
+
+<p style="margin-top: 0; margin-bottom: 1rem; max-width: 820px; text-align: justify;">
+  DocuRAG emphasizes applied <b>machine learning, NLP, and systems engineering</b> practices
+  relevant to production deployments: modular pipeline design, session-isolated vector indexing,
+  OCR-resilient document extraction, intent-aware summarization routing, and strictly
+  source-grounded answer generation. The system is intentionally implemented without orchestration
+  frameworks to preserve architectural transparency and fine-grained control over retrieval
+  and prompting behavior.
+</p>
+---
+
 
 ## 📑 Contents 
 
