@@ -18,6 +18,26 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
 
 ---
 
+## 📑 Contents (Technical)
+
+- [Project Overview](#project-overview)
+- [Architecture Overview](#architecture)
+- [System Overview](#system-overview)
+- [Codebase Structure](#codebase-structure)
+- [Core Functionalities](#core-functionalities)
+- [Key Design Goals](#design-goals)
+- [Failure Modes & Safeguards](#failure-modes)
+- [Design Goals → Code Mapping](#design-goals--code-mapping)
+  - [Implementation Map](#design-goals--implementation-map)
+- [Running DocuRAG](#running-docurag)
+  - [Local Setup](#run-locally)
+  - [Docker Deployment](#run-with-docker)
+  - [Hugging Face Spaces](#run-on-hugging-face-spaces)
+- [Testing PDFs](#quick-testing-pdfs)
+- [License](#license)
+
+---
+
 ## 🚀 Project Overview
 
 DocuRAG enables users to ask natural‑language questions over custom knowledge sources provided via:
@@ -27,14 +47,7 @@ DocuRAG enables users to ask natural‑language questions over custom knowledge 
 
 The system retrieves the most relevant document segments using **vector similarity search (Chroma)** and generates **context‑grounded answers** using an LLM, with optional **summary‑style responses** when intent is detected.
 
-Key design goals:
-- Clear separation of concerns
-- Extensibility across models and embeddings
-- Robust document ingestion (including OCR)
-- Session‑isolated retrieval to avoid data leakage
-
 ---
-
 
 ## 🏗️ Architecture Overview
 
@@ -55,6 +68,10 @@ flowchart TD
 ```
 
 ---
+
+## System Overview
+
+DocuRAG is a modular, document-grounded RAG system built around a clear separation of concerns across [`docurag/core/`](docurag/core/), [`docurag/ui/`](docurag/ui/), and [`docurag/utils/`](docurag/utils/) modules (see the table above). It supports both local PDF uploads and URL-based ingestion via [`docurag/core/ingestion.py`](docurag/core/ingestion.py), extracts text using a resilient `fitz → pdfplumber → OCR` cascade in [`docurag/core/extraction.py`](docurag/core/extraction.py), and ensures session-isolated retrieval through [`docurag/core/vectorstore.py`](docurag/core/vectorstore.py) to prevent data leakage. Query-time behavior is orchestrated in [`docurag/core/rag.py`](docurag/core/rag.py), including intent-aware handling for summarization-style prompts (e.g., “main contributions”) and safe fallbacks that suppress citations when no relevant evidence is retrieved, while [`docurag/ui/formatting.py`](docurag/ui/formatting.py) provides transparent citations and retrieval debug views. The full stack is designed for reproducible deployment with OCR enabled, using the [`Dockerfile`](Dockerfile) and [`requirements.txt`](requirements.txt) to keep runtime behavior consistent across local runs and Hugging Face Spaces.
 
 ## 🧩 Codebase Structure
 
@@ -83,8 +100,6 @@ docurag/
 ```
 
 ---
-
-
 ## ✨ Core Functionalities (What This System Demonstrates)
 
 This project intentionally mirrors decisions made in real applied‑AI systems.
@@ -116,29 +131,14 @@ This project intentionally mirrors decisions made in real applied‑AI systems.
 - Optional debug traces
 - Clean formatting for UI display
 
-### 🖥️ Deployment‑Ready UI
+### 🖥️ Deployment‑Ready UI, Docker & OCR Support (Tesseract)
 - Gradio interface
 - Local, Docker, and Hugging Face Spaces support
-
-### 🐳 Docker & OCR Support (Tesseract)
-
-DocuRAG implements a **robust document extraction cascade** (`docurag/core/extraction.py`):
-
-**PyMuPDF (`fitz`) → pdfplumber → OCR fallback**
+- Robust document extraction cascade (`docurag/core/extraction.py`):
+  - **PyMuPDF (`fitz`) → pdfplumber → OCR fallback**
 
 This design matters because **many real-world PDFs are scanned images**, not “true text” PDFs.  
 When a document contains only images, standard text extraction returns little or nothing — so the system **automatically falls back to OCR**.
-
-#### Why Tesseract is included in Docker
-
-The provided `Dockerfile` installs **`tesseract-ocr`** to ensure:
-
-- ✅ Reliable OCR in containerized deployments  
-- ✅ Consistent behavior across OS environments  
-- ✅ No “works on my machine” extraction failures  
-- ✅ True document intelligence for scanned PDFs  
-
-This is especially important for **production and Hugging Face Spaces deployments**.
 
 ---
 
@@ -244,27 +244,6 @@ DocuRAG is designed to handle common failure modes in document-centric RAG syste
 
 The table below maps DocuRAG’s key design goals directly to the modules that enforce them.
 
-| Design Goal | Enforced By |
-|------------|-------------|
-| Clear separation of concerns | `core/`, `ui/`, and `utils/` module boundaries |
-| Robust document ingestion with OCR | `core/ingestion.py`, `core/extraction.py`, `Dockerfile` |
-| Session-isolated retrieval | `core/vectorstore.py` |
-| Extensible models & embeddings | `core/config.py`, `core/rag.py` |
-| Multiple ingestion paths (PDF + URL) | `core/ingestion.py` |
-| Adaptive handling of summary-style queries | `core/rag.py` (`is_summary_intent`, summary routing) |
-| Suppression of citations when no evidence exists | `core/rag.py`, `ui/formatting.py` |
-| Grounded generation from retrieved context only | `core/rag.py` |
-| Configurable chunking strategies | `core/chunking.py`, `core/config.py` |
-| NLP preprocessing & sentence handling | `utils/nlp.py`, `utils/text.py` |
-| Reproducible, OCR-ready deployment | `Dockerfile`, `requirements.txt` |
-| Debuggability of retrieval behavior | `ui/formatting.py` (retrieval debug output) |
-
----
-
-## 🧩 Design Goals → Code Mapping
-
-The table below maps DocuRAG’s key design goals directly to the modules that enforce them.
-
 > Note: Links are relative to the repo root.
 
 | Design Goal | Enforced By |
@@ -282,7 +261,7 @@ The table below maps DocuRAG’s key design goals directly to the modules that e
 | Reproducible, OCR-ready deployment | [`Dockerfile`](Dockerfile) · [`requirements.txt`](requirements.txt) |
 | Debuggability of retrieval behavior | [`docurag/ui/formatting.py`](docurag/ui/formatting.py) *(retrieval debug output)* |
 
-### Mermaid: Goals → Modules Map
+### Design Goals → Implementation Map
 
 ```mermaid
 flowchart LR
@@ -350,12 +329,6 @@ flowchart LR
 
   G12 --> MFormat
 ```
----
-
-## Executive Summary
-
-DocuRAG is a modular, document-grounded RAG system built around a clear separation of concerns across [`docurag/core/`](docurag/core/), [`docurag/ui/`](docurag/ui/), and [`docurag/utils/`](docurag/utils/) modules (see the table above). It supports both local PDF uploads and URL-based ingestion via [`docurag/core/ingestion.py`](docurag/core/ingestion.py), extracts text using a resilient `fitz → pdfplumber → OCR` cascade in [`docurag/core/extraction.py`](docurag/core/extraction.py), and ensures session-isolated retrieval through [`docurag/core/vectorstore.py`](docurag/core/vectorstore.py) to prevent data leakage. Query-time behavior is orchestrated in [`docurag/core/rag.py`](docurag/core/rag.py), including intent-aware handling for summarization-style prompts (e.g., “main contributions”) and safe fallbacks that suppress citations when no relevant evidence is retrieved, while [`docurag/ui/formatting.py`](docurag/ui/formatting.py) provides transparent citations and retrieval debug views. The full stack is designed for reproducible deployment with OCR enabled, using the [`Dockerfile`](Dockerfile) and [`requirements.txt`](requirements.txt) to keep runtime behavior consistent across local runs and Hugging Face Spaces.
-
 ---
 
 ## ▶️ Running DocuRAG
