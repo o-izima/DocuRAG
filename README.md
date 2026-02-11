@@ -158,6 +158,23 @@ LLMs and embedding models are configured via environment settings, making it eas
 - **Multiple ingestion paths (local files + URLs):**
 Users can upload PDFs from their local machine or provide a URL, both routed through the same downstream processing and indexing pipeline.
 
+- **Adaptive question handling beyond fact lookup:**
+    
+    The system is designed to generalize beyond narrow fact-based queries and handle higher-level intents such as:
+    
+    - *“What are the main contributions of this paper?”*
+    - *“Provide a summary of the document.”*
+        
+        Query intent is detected and routed appropriately, ensuring meaningful responses even when answers span multiple sections.
+
+- **Graceful handling of low-relevance or missing context**
+    
+    When retrieval yields no relevant chunks, the system avoids misleading responses and:
+    
+    - returns a clear, user-friendly message
+    - suppresses citations when no supporting content exists
+        
+        This prevents false attribution and improves trust in the system’s outputs.
 - **Configurable chunking and retrieval strategies:**
 Chunking mode (auto, sentence-based, or word-window) and retrieval depth (Top-K) are exposed as configurable parameters to support different document types and query behaviors.
 
@@ -172,6 +189,75 @@ The Docker image includes tesseract-ocr, ensuring OCR functionality works reliab
 
 - **Minimal framework coupling:**
 The RAG pipeline is implemented without heavy orchestration frameworks, keeping the logic explicit, debuggable, and easy to reason about.
+
+---
+
+## 🛡️ Failure Modes & Safeguards
+
+DocuRAG is designed to handle common failure modes in document-centric RAG systems gracefully, prioritizing correctness, transparency, and user trust.
+
+- **Scanned or image-only PDFs**
+    
+    *Failure mode:* Native text extraction returns empty or unusable content.
+    
+    *Safeguard:* A multi-stage extraction cascade (`fitz → pdfplumber → OCR`) automatically falls back to OCR when required, ensuring text is extracted even from scanned documents (`core/extraction.py`).
+    
+- **Empty or low-relevance retrieval results**
+    
+    *Failure mode:* The retriever returns no chunks relevant to the user’s question.
+    
+    *Safeguard:* The system avoids hallucination by returning a clear message indicating insufficient context and suppresses citations when no supporting evidence exists (`core/rag.py`, `ui/formatting.py`).
+    
+- **Overly narrow or overly broad chunking**
+    
+    *Failure mode:* Poor chunk boundaries lead to incomplete or noisy context.
+    
+    *Safeguard:* Multiple chunking strategies (auto, sentence-based, word-window) are supported, allowing the system to adapt chunk granularity to document structure (`core/chunking.py`).
+    
+- **High-level or abstract queries**
+    
+    *Failure mode:* Questions such as *“What are the main contributions of this paper?”* fail because answers span multiple sections.
+    
+    *Safeguard:* Query intent detection routes summarization-style questions through a dedicated path that aggregates broader context rather than relying on a single chunk (`core/rag.py`).
+    
+- **Cross-session data leakage**
+    
+    *Failure mode:* Retrieved context from a previous document appears in a new session.
+    
+    *Safeguard:* Each session uses an isolated Chroma vector store instance, and resets are enforced when new documents are ingested (`core/vectorstore.py`).
+    
+- **Misleading or fabricated citations**
+    
+    *Failure mode:* Citations are shown even when no document content supports the answer.
+    
+    *Safeguard:* Citations are generated strictly from retrieved metadata and are omitted entirely when no relevant context is found (`ui/formatting.py`).
+    
+- **Environment inconsistency across deployments**
+    
+    *Failure mode:* OCR or NLP components work locally but fail in cloud environments.
+    
+    *Safeguard:* Docker-based deployment packages all system dependencies (including Tesseract OCR), ensuring consistent behavior across local runs and Hugging Face Spaces (`Dockerfile`).
+
+---
+
+## 🧩 Design Goals → Code Mapping
+
+The table below maps DocuRAG’s key design goals directly to the modules that enforce them.
+
+| Design Goal | Enforced By |
+|------------|-------------|
+| Clear separation of concerns | `core/`, `ui/`, and `utils/` module boundaries |
+| Robust document ingestion with OCR | `core/ingestion.py`, `core/extraction.py`, `Dockerfile` |
+| Session-isolated retrieval | `core/vectorstore.py` |
+| Extensible models & embeddings | `core/config.py`, `core/rag.py` |
+| Multiple ingestion paths (PDF + URL) | `core/ingestion.py` |
+| Adaptive handling of summary-style queries | `core/rag.py` (`is_summary_intent`, summary routing) |
+| Suppression of citations when no evidence exists | `core/rag.py`, `ui/formatting.py` |
+| Grounded generation from retrieved context only | `core/rag.py` |
+| Configurable chunking strategies | `core/chunking.py`, `core/config.py` |
+| NLP preprocessing & sentence handling | `utils/nlp.py`, `utils/text.py` |
+| Reproducible, OCR-ready deployment | `Dockerfile`, `requirements.txt` |
+| Debuggability of retrieval behavior | `ui/formatting.py` (retrieval debug output) |
 
 ---
 
