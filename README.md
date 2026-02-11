@@ -142,61 +142,106 @@ This is especially important for **production and Hugging Face Spaces deployment
 
 ## ▶️ Running DocuRAG
 
-### 1️⃣ Clone the Repository
+### 🖥️ Run Locally (Recommended for Development)
+#### Clone the Repository
 ```bash
 git clone https://github.com/o-izima/DocuRAG.git
 cd DocuRAG
 ```
 
-## 2️⃣ Create and Configure `.env`
+### Create and Configure `.env`
 
 ```bash
 cp .env.example .env
+```
 
 Edit `.env` and set at least:
 
+```bash
 OPENAI_API_KEY=your_api_key_here
 MODEL_NAME=your_llm_model_name
 EMBEDDING_MODEL_NAME=your_embedding_model_name
-
-## 🖥️ Run Locally
+```
+Optional but recommended (tune retrieval behavior):
 
 ```bash
-git clone https://github.com/oizima/docurag.git
-cd docurag
+CHUNK_SIZE=500
+CHUNK_OVERLAP=50
+TOP_K=5
+```
+You may also configure additional retrieval or chunking parameters depending on your use case.
 
+#### Using `pip`
+```bash
+
+```bash
 python -m venv .venv
-source .venv/bin/activate
+source .venv/bin/activate      # macOS / Linux
+# .\.venv\Scripts\activate     # Windows PowerShell
 pip install -r requirements.txt
-
-cp .env.example .env
-python app.py
 ```
 
-Open: http://localhost:7860
+Start the Gradio UI:
+
+```bash
+python -m docurag.ui.gradio_app
+```
+Then open:
+
+```bash
+http://localhost:7860
+```
 
 ---
 
-## 🐳 Docker
+## 🐳 Run with Docker (Best for OCR Reliability)
 
 ```bash
 docker build -t docurag .
 docker run -p 7860:7860 --env-file .env docurag
 ```
+Then open:
+
+```bash
+http://localhost:7860
+```
+
+✅ Docker is strongly recommended if you plan to ingest scanned PDFs, since tesseract-ocr is guaranteed to be available inside the container.
 
 ---
 
-## 🤗 Hugging Face Spaces
+## 🤗 Run on Hugging Face Spaces
+
+
+---
+
+```markdown
+## 🤗 Run on Hugging Face Spaces
+
+This repository includes **`README_HF_SPACES.md`** to support Hugging Face deployment.
+
+### Typical Hugging Face Spaces Setup (Docker Space)
+
+1. Create a new Space on Hugging Face  
+2. Select **Docker** as the Space SDK  
+3. Connect this repository *or* push the code directly  
+4. Add environment variables in the Space settings:
 
 ```bash
-git clone https://huggingface.co/spaces/oizima/docurag
-cd docurag
-git add .
-git commit -m "Deploy DocuRAG"
-git push
+OPENAI_API_KEY=your_api_key_here
+MODEL_NAME=your_llm_model_name
+EMBEDDING_MODEL_NAME=your_embedding_model_name
+TOP_K=5
+CHUNK_SIZE=500
 ```
 
-The Space will automatically build and launch the Gradio app.
+Hugging Face will:
+- build the Docker image
+- install dependencies (including OCR)
+- host the Gradio app automatically
+
+⚠️ If you rely on OCR in Spaces, Docker-based deployment is strongly recommended so that Tesseract is available at runtime.
+
 
 ---
 
