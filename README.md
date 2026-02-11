@@ -118,9 +118,7 @@ This project intentionally mirrors decisions made in real applied‑AI systems.
 - Gradio interface
 - Local, Docker, and Hugging Face Spaces support
 
----
-
-## 🐳 Docker & OCR Support (Tesseract)
+### 🐳 Docker & OCR Support (Tesseract)
 
 DocuRAG implements a **robust document extraction cascade** (`docurag/core/extraction.py`):
 
@@ -129,7 +127,7 @@ DocuRAG implements a **robust document extraction cascade** (`docurag/core/extra
 This design matters because **many real-world PDFs are scanned images**, not “true text” PDFs.  
 When a document contains only images, standard text extraction returns little or nothing — so the system **automatically falls back to OCR**.
 
-### Why Tesseract is included in Docker
+#### Why Tesseract is included in Docker
 
 The provided `Dockerfile` installs **`tesseract-ocr`** to ensure:
 
@@ -148,6 +146,7 @@ This is especially important for **production and Hugging Face Spaces deployment
 ```bash
 git clone https://github.com/o-izima/DocuRAG.git
 cd DocuRAG
+```
 
 ## 2️⃣ Create and Configure `.env`
 
