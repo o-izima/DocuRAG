@@ -31,7 +31,7 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
     <b>Document Retrieval‑Augmented Generation (RAG)</b><br/>
       <span style="opacity: 0.8;">Modular pipeline • Session-isolated Chroma retrieval • Source-grounded answers (No LangChain)</span>
   </p>
-
+</div>
 
 <p style="margin-top: 0; margin-bottom: 0.75rem; text-align: justify;">
   <b>Production-Grade RAG Architecture for Document-Centric LLM Systems</b><br/>
@@ -50,6 +50,7 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
   frameworks to preserve architectural transparency and fine-grained control over retrieval
   and prompting behavior.
 </p>
+<div align="center">
   <!-- Primary Action Badges -->
   <p style="margin: 0.75rem 0 1rem 0;">
     <a href="https://huggingface.co/spaces/oizima/docurag" target="_blank" rel="noopener noreferrer">
