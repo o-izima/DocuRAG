@@ -10,7 +10,7 @@ pinned: false
 ---
 <!-- Hugging Face Spaces configuration (ignored by GitHub rendering) -->
 
-<br/>
+<hr/>
 
 <a name="top"></a>
 ---
@@ -122,6 +122,76 @@ flowchart TD
 ```
 
 ---
+## UI Interaction Flow
+
+```mermaid
+flowchart TD
+
+  User[User] --> UI[Gradio Interface<br/>docurag/ui/gradio_app.py]
+
+  %% Document Ingestion
+  UI -->|Upload PDF| IngestPDF[ingest_pdf(file_obj)]
+  UI -->|Or PDF URL| IngestURL[ingest_pdf(url)]
+  IngestPDF --> Extract[Extraction Cascade<br/>fitz → pdfplumber → OCR]
+  IngestURL --> Extract
+  Extract --> Clean[Text Cleaning<br/>utils/text.py]
+  Clean --> Chunk[Chunking strategy<br/>auto / sentence / word]
+  Chunk --> Index[index_document()]
+  Index --> VS[Session Chroma Vector Store<br/>create_vector_store()]
+
+  %% Query Controls
+  UI -->|Type your question here| Query[User Query]
+  UI -->|Top-K chunks (Slider)| K[Select k]
+  UI -->|Show retrieval debug (Checkbox)| DebugToggle[Enable Debug]
+  UI -->|Chunking strategy (Dropdown)| ChunkMode[Select chunk mode]
+
+  %% Ask Flow
+  UI -->|Click "Ask"| AskHandler[process_input()]
+  AskHandler --> Intent{Summary intent?}
+  Intent -->|Yes| AdjustK[max(k, summary_top_k)]
+  Intent -->|No| UseK[Use selected k]
+
+  AskHandler --> Retrieve[retrieve(collection, q, k)]
+  Retrieve --> Retrieved[Top-K chunks + metadata]
+
+  Retrieved --> Decision{Any chunks retrieved?}
+
+  Decision -->|No| Fallback[Return fallback message<br/>No citations]
+  Decision -->|Yes| Generate[generate_answer()]
+  Generate --> FormatCitations[format_sources()]
+  FormatCitations --> Output[Answer + Citations]
+
+  %% Debug Panel
+  Retrieved -->|If debug enabled| DebugPanel[Render "Retrieval Debug (Top-K chunks)"<br/>ui/formatting.py]
+
+  %% Reset Flow
+  UI -->|Click "Clear / Reset session"| Reset[clear_all()]
+  Reset --> ResetVS[reset_vector_store()]
+  ResetVS --> ClearUI[Clear inputs + Status → "Ready."]
+
+  Output --> UI
+  Fallback --> UI
+  DebugPanel --> UI
+  ClearUI --> UI
+```
+
+#### What the “Retrieval Debug (Top-K chunks)” Panel Shows
+
+When “Show retrieval debug” is enabled:
+- Displays the exact Top-K retrieved chunks
+- Includes:
+  - Extracted text snippets
+  - Source filename
+  - Page number metadata
+
+- Shows retrieval ordering
+- Helps diagnose:
+  - Irrelevant chunk retrieval
+  - Over/under chunking
+  - Inadequate Top-K selection
+  - Summary routing behavior
+
+This panel provides transparent inspection of retrieval behavior, which is critical for debugging and evaluating RAG systems.
 
 ## System Overview
 
