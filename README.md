@@ -242,6 +242,21 @@ Hugging Face will:
 
 ⚠️ If you rely on OCR in Spaces, Docker-based deployment is strongly recommended so that Tesseract is available at runtime.
 
+---
+
+## Quick testing PDFs
+
+Use these in the URL field or download the files to your local computer:
+
+- https://arxiv.org/pdf/1706.03762.pdf (Transformers)
+
+- https://arxiv.org/pdf/2501.12948.pdf (DeepSeek-R1)
+
+Try:
+
+- “What is self-attention?”
+
+- “Summarize the paper / main contributions”
 
 ---
 
