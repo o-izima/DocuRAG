@@ -8,6 +8,9 @@ sdk_version: "6.5.1"
 app_file: docurag/ui/gradio_app.py
 pinned: false
 ---
+<!-- Hugging Face Spaces configuration (ignored by GitHub rendering) -->
+
+<br/>
 
 <a name="top"></a>
 ---
