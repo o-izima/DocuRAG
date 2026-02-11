@@ -101,8 +101,6 @@ The system retrieves the most relevant document segments using **vector similari
 
 A live deployment is available on [Hugging Face Spaces](https://huggingface.co/spaces/oizima/docurag).
 
-**Live Demo:** https://huggingface.co/spaces/oizima/docurag *(opens in a new tab)*
-
 ---
 
 ## Architecture Overview
