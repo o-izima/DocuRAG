@@ -17,6 +17,49 @@ DocuRAG is a **production‑style, modular Retrieval‑Augmented Generation (RAG
 It is built to showcase **applied ML, NLP, and systems design skills** relevant to real‑world RAG deployments.
 
 ---
+<!-- =======================
+     DocuRAG README Header
+     Optimized for GitHub + HF (light/dark)
+     Links open in new tabs
+     ======================= -->
+
+<div align="center">
+  <a name="top"></a>
+
+  <h1 style="margin-bottom: 0.2rem;">📄 DocuRAG</h1>
+  <p style="margin-top: 0; margin-bottom: 1rem;">
+    <b>Production-style, OCR-enabled Retrieval-Augmented Generation over PDFs & URLs</b><br/>
+    <span style="opacity: 0.8;">Modular pipeline • Session-isolated Chroma retrieval • Source-grounded answers (No LangChain)</span>
+  </p>
+
+  <p style="margin: 0.75rem 0 1rem 0;">
+    <a href="https://huggingface.co/spaces/oizima/docurag" target="_blank" rel="noopener noreferrer">
+      <img alt="Hugging Face Space" src="https://img.shields.io/badge/🤗%20Hugging%20Face-Live%20Demo-yellow?style=for-the-badge" />
+    </a>
+    <a href="https://github.com/o-izima/DocuRAG" target="_blank" rel="noopener noreferrer">
+      <img alt="GitHub Repository" src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github&logoColor=white" />
+    </a>
+  </p>
+
+  <p style="margin: 0 0 1.25rem 0;">
+    <img alt="Deployed on Spaces" src="https://img.shields.io/badge/Deployed-HF%20Spaces-555?style=flat-square" />
+    <img alt="Dockerized" src="https://img.shields.io/badge/Dockerized-Yes-555?style=flat-square" />
+    <img alt="OCR enabled" src="https://img.shields.io/badge/OCR-Tesseract%20Enabled-555?style=flat-square" />
+    <img alt="Vector store" src="https://img.shields.io/badge/Vector%20Store-Chroma-555?style=flat-square" />
+    <img alt="Framework" src="https://img.shields.io/badge/No%20LangChain-Explicit%20Pipeline-555?style=flat-square" />
+  </p>
+
+  <p style="margin: 0 0 0.25rem 0;">
+    <a href="#-project-overview">Overview</a> ·
+    <a href="#-architecture-overview">Architecture</a> ·
+    <a href="#system-overview">System Overview</a> ·
+    <a href="#-running-docurag">Run</a>
+  </p>
+
+  <hr style="margin-top: 1.25rem;"/>
+</div>
+
+---
 
 ## 📑 Contents 
 
@@ -55,12 +98,9 @@ The system retrieves the most relevant document segments using **vector similari
 [![Hugging Face Space](https://img.shields.io/badge/🤗%20Hugging%20Face-Live%20Demo-yellow?style=for-the-badge)](https://huggingface.co/spaces/oizima/docurag)
 
 <p align="center">
-
-<img src="https://img.shields.io/badge/Deployed-Hugging%20Face%20Spaces-black?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Dockerized-Yes-black?style=for-the-badge" />
-<img src="https://img.shields.io/badge/OCR-Tesseract%20Enabled-black?style=for-the-badge" />
-<img src="https://img.shields.io/badge/Framework-Free%20(No%20LangChain)-black?style=for-the-badge" />
-
+  <a href="https://huggingface.co/spaces/oizima/docurag" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/🤗%20Hugging%20Face-Live%20Demo-yellow?style=for-the-badge" />
+  </a>
 </p>
 
 
