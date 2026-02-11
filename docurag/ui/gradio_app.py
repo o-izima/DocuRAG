@@ -78,7 +78,7 @@ def build_app():
                 clear_btn = gr.Button("Clear / Reset session", variant="primary")
                 #clear_btn = gr.Button("Clear / Reset session")
 
-                clear_btn = gr.Button("Clear / Reset session", variant="primary")
+                
 
 
             with gr.Column():
@@ -91,7 +91,7 @@ def build_app():
 
                 ask_btn = gr.Button("Ask", variant="primary")
 
-                ask_btn = gr.Button("Ask")
+                
 
                 gr.Markdown("### ✅ Answer")
                 answer_output = gr.Markdown()
