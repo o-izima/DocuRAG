@@ -130,49 +130,50 @@ flowchart TD
   User[User] --> UI[Gradio Interface<br/>docurag/ui/gradio_app.py]
 
   %% Document Ingestion
-  UI -->|Upload PDF| IngestPDF[ingest_pdf(file_obj)]
-  UI -->|Or PDF URL| IngestURL[ingest_pdf(url)]
+  UI -->|Upload PDF| IngestPDF[Ingest PDF]
+  UI -->|Or PDF URL| IngestURL[Ingest URL]
   IngestPDF --> Extract[Extraction Cascade<br/>fitz → pdfplumber → OCR]
   IngestURL --> Extract
-  Extract --> Clean[Text Cleaning<br/>utils/text.py]
-  Clean --> Chunk[Chunking strategy<br/>auto / sentence / word]
-  Chunk --> Index[index_document()]
-  Index --> VS[Session Chroma Vector Store<br/>create_vector_store()]
+  Extract --> Clean[Text Cleaning]
+  Clean --> Chunk[Chunking Strategy<br/>auto / sentence / word]
+  Chunk --> Index[Index Document]
+  Index --> VS[Session Chroma Vector Store]
 
   %% Query Controls
   UI -->|Type your question here| Query[User Query]
-  UI -->|Top-K chunks (Slider)| K[Select k]
-  UI -->|Show retrieval debug (Checkbox)| DebugToggle[Enable Debug]
-  UI -->|Chunking strategy (Dropdown)| ChunkMode[Select chunk mode]
+  UI -->|Top-K chunks Slider| K[Select k]
+  UI -->|Show retrieval debug Checkbox| DebugToggle[Enable Debug]
+  UI -->|Chunking strategy Dropdown| ChunkMode[Select Chunk Mode]
 
   %% Ask Flow
-  UI -->|Click "Ask"| AskHandler[process_input()]
-  AskHandler --> Intent{Summary intent?}
-  Intent -->|Yes| AdjustK[max(k, summary_top_k)]
+  UI -->|Click Ask| AskHandler[Process Input]
+  AskHandler --> Intent{Summary Intent?}
+  Intent -->|Yes| AdjustK[Increase k if needed]
   Intent -->|No| UseK[Use selected k]
 
-  AskHandler --> Retrieve[retrieve(collection, q, k)]
-  Retrieve --> Retrieved[Top-K chunks + metadata]
+  AskHandler --> Retrieve[Retrieve Top-K Chunks]
+  Retrieve --> Retrieved[Chunks + Metadata]
 
   Retrieved --> Decision{Any chunks retrieved?}
 
-  Decision -->|No| Fallback[Return fallback message<br/>No citations]
-  Decision -->|Yes| Generate[generate_answer()]
-  Generate --> FormatCitations[format_sources()]
+  Decision -->|No| Fallback[Return Fallback Message<br/>No Citations]
+  Decision -->|Yes| Generate[Generate Answer]
+  Generate --> FormatCitations[Format Citations]
   FormatCitations --> Output[Answer + Citations]
 
   %% Debug Panel
-  Retrieved -->|If debug enabled| DebugPanel[Render "Retrieval Debug (Top-K chunks)"<br/>ui/formatting.py]
+  Retrieved -->|If debug enabled| DebugPanel["Retrieval Debug (Top-K chunks)"]
 
   %% Reset Flow
-  UI -->|Click "Clear / Reset session"| Reset[clear_all()]
-  Reset --> ResetVS[reset_vector_store()]
-  ResetVS --> ClearUI[Clear inputs + Status → "Ready."]
+  UI -->|Click Clear / Reset session| Reset[Clear Session]
+  Reset --> ResetVS[Reset Vector Store]
+  ResetVS --> ClearUI[Clear Inputs + Status Ready]
 
   Output --> UI
   Fallback --> UI
   DebugPanel --> UI
   ClearUI --> UI
+
 ```
 
 #### What the “Retrieval Debug (Top-K chunks)” Panel Shows
