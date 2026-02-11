@@ -1,13 +1,3 @@
----
-title: DocuRAG — PDF RAG (No LangChain)
-emoji: 📄
-colorFrom: blue
-colorTo: gray
-sdk: gradio
-app_file: app.py
-pinned: false
----
-
 <a name="top"></a>
 # 📄 DocuRAG — Document Retrieval‑Augmented Generation (RAG)
 
@@ -140,6 +130,37 @@ The provided `Dockerfile` installs **`tesseract-ocr`** to ensure:
 This is especially important for **production and Hugging Face Spaces deployments**.
 
 ----
+- **Clear separation of concerns**
+Each stage of the RAG pipeline (ingestion, extraction, chunking, retrieval, generation, and UI) is isolated into well-defined modules, improving readability, testability, and long-term maintainability.
+
+- **Robust document ingestion with OCR support**
+Documents are processed using a resilient extraction cascade (native PDF parsing → layout-aware extraction → OCR fallback), ensuring both digital and scanned PDFs are handled reliably.
+
+Session-isolated retrieval to prevent data leakage
+Each user session operates on its own vector store instance, preventing cross-document or cross-user contamination during retrieval and generation.
+
+Extensibility across models and embedding providers
+LLMs and embedding models are configured via environment settings, making it easy to swap providers or models without changing core logic.
+
+Multiple ingestion paths (local files + URLs)
+Users can upload PDFs from their local machine or provide a URL, both routed through the same downstream processing and indexing pipeline.
+
+Configurable chunking and retrieval strategies
+Chunking mode (auto, sentence-based, or word-window) and retrieval depth (Top-K) are exposed as configurable parameters to support different document types and query behaviors.
+
+Grounded generation with explicit source attribution
+Answers are generated strictly from retrieved document context and returned with citations (source and page), reducing hallucination and improving transparency.
+
+Docker-first deployment for reproducibility
+The application is designed to run consistently across local environments, Hugging Face Spaces, and other platforms using Docker, including all system-level dependencies.
+
+OCR-ready containerized runtime
+The Docker image includes tesseract-ocr, ensuring OCR functionality works reliably in cloud and containerized deployments without additional setup.
+
+Minimal framework coupling
+The RAG pipeline is implemented without heavy orchestration frameworks, keeping the logic explicit, debuggable, and easy to reason about.
+
+---
 
 ## ▶️ Running DocuRAG
 
