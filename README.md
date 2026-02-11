@@ -54,6 +54,20 @@ The system retrieves the most relevant document segments using **vector similari
 
 [![Hugging Face Space](https://img.shields.io/badge/🤗%20Hugging%20Face-Live%20Demo-yellow?style=for-the-badge)](https://huggingface.co/spaces/oizima/docurag)
 
+<p align="center">
+
+<a href="https://github.com/o-izima/DocuRAG">
+  <img src="https://img.shields.io/badge/GitHub-Repository-black?style=for-the-badge&logo=github&logoColor=white" />
+</a>
+
+<a href="https://huggingface.co/spaces/oizima/docurag">
+  <img src="https://img.shields.io/badge/Hugging%20Face-Live%20Demo-black?style=for-the-badge" />
+</a>
+
+<img src="https://img.shields.io/badge/LLM-RAG%20System-black?style=for-the-badge" />
+
+</p>
+
 ---
 
 ## Architecture Overview
