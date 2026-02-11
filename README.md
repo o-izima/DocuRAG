@@ -106,7 +106,7 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
 
   <!-- Quick Navigation Links -->
   <p style="margin: 0 0 0.25rem 0;">
-    <a href="#-project-overview">Overview</a> ·
+    <a href="#project-overview">Overview</a> ·
     <a href="#live-demo">Live Demo</a> ·
     <a href="#-architecture-overview">Architecture</a> ·
     <a href="#system-overview">System Overview</a> ·
