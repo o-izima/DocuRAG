@@ -18,7 +18,7 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
 
 ---
 
-## 📑 Contents (Technical)
+## 📑 Contents 
 
 - [Project Overview](#project-overview)
 - [Architecture Overview](#architecture)
