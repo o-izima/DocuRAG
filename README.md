@@ -33,42 +33,6 @@ Key design goals:
 
 ---
 
-## ✨ Core Functionalities (What This System Demonstrates)
-
-This project intentionally mirrors decisions made in real applied‑AI systems.
-
-### 📄 Document Ingestion
-- Upload **native or scanned PDFs**
-- Ingest **web content via URL**
-- Metadata preservation for citations
-
-### 🔍 Robust Text Extraction
-- **Cascade extraction strategy**:
-  1. PyMuPDF (`fitz`) — fast, native PDFs
-  2. pdfplumber — complex layouts
-  3. OCR fallback (Tesseract) — scanned documents
-
-### ✂️ Intelligent Chunking
-- Word‑window chunking with overlap
-- Sentence‑based chunking (NLTK)
-- **Auto mode** that adapts to document size
-
-### 🧠 Retrieval‑Augmented Generation
-- Session‑scoped **Chroma vector stores**
-- Top‑K similarity retrieval
-- Context‑bounded prompting
-- **Summary‑intent detection** vs QA routing
-
-### 🧾 Traceability & Citations
-- Page‑level source attribution
-- Optional debug traces
-- Clean formatting for UI display
-
-### 🖥️ Deployment‑Ready UI
-- Gradio interface
-- Local, Docker, and Hugging Face Spaces support
-
----
 
 ## 🏗️ Architecture Overview
 
@@ -117,6 +81,84 @@ docurag/
 ```
 
 ---
+
+
+## ✨ Core Functionalities (What This System Demonstrates)
+
+This project intentionally mirrors decisions made in real applied‑AI systems.
+
+### 📄 Document Ingestion
+- Upload **native or scanned PDFs**
+- Ingest **web content via URL**
+- Metadata preservation for citations
+
+### 🔍 Robust Text Extraction
+- **Cascade extraction strategy**:
+  1. PyMuPDF (`fitz`) — fast, native PDFs
+  2. pdfplumber — complex layouts
+  3. OCR fallback (Tesseract) — scanned documents
+
+### ✂️ Intelligent Chunking
+- Word‑window chunking with overlap
+- Sentence‑based chunking (NLTK)
+- **Auto mode** that adapts to document size
+
+### 🧠 Retrieval‑Augmented Generation
+- Session‑scoped **Chroma vector stores**
+- Top‑K similarity retrieval
+- Context‑bounded prompting
+- **Summary‑intent detection** vs QA routing
+
+### 🧾 Traceability & Citations
+- Page‑level source attribution
+- Optional debug traces
+- Clean formatting for UI display
+
+### 🖥️ Deployment‑Ready UI
+- Gradio interface
+- Local, Docker, and Hugging Face Spaces support
+
+---
+
+## 🐳 Docker & OCR Support (Tesseract)
+
+DocuRAG implements a **robust document extraction cascade** (`docurag/core/extraction.py`):
+
+**PyMuPDF (`fitz`) → pdfplumber → OCR fallback**
+
+This design matters because **many real-world PDFs are scanned images**, not “true text” PDFs.  
+When a document contains only images, standard text extraction returns little or nothing — so the system **automatically falls back to OCR**.
+
+### Why Tesseract is included in Docker
+
+The provided `Dockerfile` installs **`tesseract-ocr`** to ensure:
+
+- ✅ Reliable OCR in containerized deployments  
+- ✅ Consistent behavior across OS environments  
+- ✅ No “works on my machine” extraction failures  
+- ✅ True document intelligence for scanned PDFs  
+
+This is especially important for **production and Hugging Face Spaces deployments**.
+
+----
+
+## ▶️ Running DocuRAG
+
+### 1️⃣ Clone the Repository
+```bash
+git clone https://github.com/o-izima/DocuRAG.git
+cd DocuRAG
+
+## 2️⃣ Create and Configure `.env`
+
+```bash
+cp .env.example .env
+
+Edit `.env` and set at least:
+
+OPENAI_API_KEY=your_api_key_here
+MODEL_NAME=your_llm_model_name
+EMBEDDING_MODEL_NAME=your_embedding_model_name
 
 ## 🖥️ Run Locally
 
