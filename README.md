@@ -194,7 +194,7 @@ http://localhost:7860
 
 ---
 
-## 🐳 Run with Docker (Best for OCR Reliability)
+### 🐳 Run with Docker (Best for OCR Reliability)
 
 ```bash
 docker build -t docurag .
@@ -210,17 +210,9 @@ http://localhost:7860
 
 ---
 
-## 🤗 Run on Hugging Face Spaces
+### 🤗 Run on Hugging Face Spaces
 
-
----
-
-```markdown
-## 🤗 Run on Hugging Face Spaces
-
-This repository includes **`README_HF_SPACES.md`** to support Hugging Face deployment.
-
-### Typical Hugging Face Spaces Setup (Docker Space)
+#### Typical Hugging Face Spaces Setup (Docker Space)
 
 1. Create a new Space on Hugging Face  
 2. Select **Docker** as the Space SDK  
