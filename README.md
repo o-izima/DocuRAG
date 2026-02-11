@@ -108,12 +108,12 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
   <p style="margin: 0 0 0.25rem 0;">
     <a href="#project-overview">Overview</a> ·
     <a href="#live-demo">Live Demo</a> ·
-    <a href="#-architecture-overview">Architecture</a> ·
+    <a href="#architecture-overview">Architecture</a> ·
     <a href="#system-overview">System Overview</a> ·
-    <a href="#-codebase-structure">Codebase</a> ·
-    <a href="#-key-design-goals">Design Goals</a> ·
-    <a href="#-failure-modes--safeguards">Safeguards</a> ·
-    <a href="#-running-docurag">Run</a>
+    <a href="#codebase-structure">Codebase</a> ·
+    <a href="#key-design-goals">Design Goals</a> ·
+    <a href="#failure-modes--safeguards">Safeguards</a> ·
+    <a href="#running-docurag">Run</a>
   </p>
 
   <hr style="margin-top: 1.25rem;"/>
