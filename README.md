@@ -10,12 +10,6 @@ pinned: false
 ---
 
 <a name="top"></a>
-# 📄 DocuRAG — Document Retrieval‑Augmented Generation (RAG)
-
-DocuRAG is a **production‑style, modular Retrieval‑Augmented Generation (RAG) system** designed to demonstrate how modern LLM applications retrieve, ground, and generate answers over **user‑supplied documents** — *without LangChain*.
-
-It is built to showcase **applied ML, NLP, and systems design skills** relevant to real‑world RAG deployments.
-
 ---
 <!-- =======================
      DocuRAG README Header
@@ -84,27 +78,6 @@ It is built to showcase **applied ML, NLP, and systems design skills** relevant 
 
   <hr style="margin-top: 1.25rem;"/>
 </div>
-
----
-
-## 📑 Contents 
-
-- [Project Overview](#project-overview)
-- [Live Demo](#live-demo)
-- [Architecture Overview](#architecture-overview)
-- [System Overview](#system-overview)
-- [Codebase Structure](#codebase-structure)
-- [Core Functionalities](#core-functionalities)
-- [Key Design Goals](#key-design-goals)
-- [Failure Modes & Safeguards](#failure-modes--safeguards)
-- [Design Goals → Code Mapping](#design-goals--code-mapping)
-  - [Implementation Map](#design-goals--implementation-map)
-- [Running DocuRAG](#running-docurag)
-  - [Local Setup](#run-locally)
-  - [Docker Deployment](#run-with-docker)
-  - [Hugging Face Spaces](#run-on-hugging-face-spaces)
-- [Testing PDFs](#testing-pdfs)
-- [License](#license)
 
 ---
 
